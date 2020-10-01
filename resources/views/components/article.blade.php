@@ -5,7 +5,7 @@
           <h4 class="mb-0">{{ substr($article->title,100) }}</h4>
           <div class="mb-1 text-muted">{{ $article->publishedAt }}</div>
           <p class="card-text mb-auto">{{ substr($article->content, 100) }}</p>
-          <a href="#" class="stretched-link">Read More</a>
+          <a href="#" class="stretched-link link-item" data-content="{{ $article->name }}" onclick="notice(this)">Read More</a>
         </div>
         <div class="col-auto d-none d-lg-block">
             @if($article->urlToImage)

@@ -32,6 +32,7 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/dashboard.css')}}" rel="stylesheet">
+    <link href="{{ asset('js/toastr/toastr.css') }}" rel="stylesheet">
 
   </head>
   <body>

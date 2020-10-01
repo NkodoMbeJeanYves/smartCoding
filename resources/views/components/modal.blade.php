@@ -86,7 +86,8 @@
         $("#modalForm").submit(
             (e) => {
                 e.preventDefault()
-                console.log('submitted')
+                toastr.warning('Please wait while creating new breaking news', 'Action in process')
+                $('#myModal').dismiss()
             }
         ); // Submit the form
    /*  }); */

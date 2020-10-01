@@ -23,8 +23,8 @@
             @foreach($data as $key  => $headline)
               <tr>
                 <td>{{ $key }}</td>
-                <td>{{ $headline->id }}</td>
-                <td>{{ $headline->name }}</td>
+                <td>{{ isset($headline->id) ? $headline->id : 'id'}}</td>
+                <td>{{ isset($headline->name) ? $headline->name : 'name' }}</td>
                 <td>{{ $headline->author }}</td>
                 <td>{{ $headline->title }}</td><!-- 
                 <td>{{ $headline->description }}</td>

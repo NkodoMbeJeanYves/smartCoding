@@ -33,6 +33,7 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/toastr/toastr.css') }}" rel="stylesheet">
   </head>
   <body>
     <div class="container">
@@ -92,18 +93,53 @@
 <!-- /.container -->
 
 <footer class="blog-footer">
-  <form class="form-inline">
+  <form class="form-inline" id="subscribe_form">
     <div class="input-group mb-2 mr-sm-2 col-md-4" style="margin-left: 40%;">
       <div class="input-group-prepend">
         <div class="input-group-text">Subscribe To News</div>
       </div>
       <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Your Email Please">
     </div>
-    <button type="submit" class="btn btn-primary mb-2">Subscribe</button>
+    <button type="submit" class="btn btn-primary mb-2" id="subscribe_btn">Subscribe</button>
   </form>
   <p>
     <a href="#">Back to top</a>
   </p>
 </footer>
+  <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script> 
+  <script src="{{ asset('js/toastr/toastr.js')}}"></script>
+  <script src="{{asset('js/toastr/config.js')}}"></script>
+
+  <script>
+
+    function notice(e){
+      content = $(e).data('content');
+      toastr.warning('That feature is not yet implemented', `${content}`)
+      
+
+    }
+
+$(document).ready(function(){
+
+  $('#subscribe_form').submit(
+      (e) =>  {
+        e.preventDefault()
+        // Display a success toast, with a title
+        toastr.success('Your request will be treaten very shortly', 'Congratulation')
+      }
+    )
+
+   /*  $('.link-item').click(
+      (e) =>  {
+        e.preventDefault()
+        toastr.warning('That feature is not yet implemented', 'Wanna read more !')
+
+      }
+    ) */
+
+
+})
+
+  </script>
 </body>
 </html>
