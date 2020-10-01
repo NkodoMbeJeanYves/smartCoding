@@ -30,11 +30,11 @@ class headline extends Model
     ];
 
     protected $casts = [
-        'publishedat' => 'datetime',
+        //'publishedat' => 'datetime',
     ];
 
     public function getSourceAttribute(){
-        return "";
+        return "source";
     }
 
     public function setDateAttribute( $value ) {

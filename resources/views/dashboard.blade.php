@@ -66,12 +66,12 @@
               Top headlines
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#" data-route_name="sources">
               <span data-feather="file"></span>
               Sources
             </a>
-          </li>
+          </li> -->
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="shopping-cart"></span>

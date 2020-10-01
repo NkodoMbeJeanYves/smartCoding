@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\headline;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection as SupportCollection;
 use stdClass;
 
 class TopHeadlinesController extends Controller
 {
 
+    private $data = [];
     protected $sampleObject = '{"source":
                                     {
                                         "id":null,
@@ -26,6 +28,7 @@ class TopHeadlinesController extends Controller
      */
     public function transformIntoCollection($datas) {
         $data = [];
+        // return Collect($datas->articles);
         foreach ($datas->articles as $key => $article) {
             # code...
             $headline = new headline;
@@ -46,7 +49,7 @@ class TopHeadlinesController extends Controller
             ]);
             $data[$key] = $headline;
         }
-
+        $this->data = $data;
         return $data;
     }
 
@@ -59,14 +62,11 @@ class TopHeadlinesController extends Controller
      */                            
     public function getHeadLinesNews(Request $request){
         # define end point
-        $endpoint = $this->getEndpointBreakingNews();
 
         #fetch data
-        $datas = $this->getDataFromEndpoint($request, $endpoint);
-        // $datas = (object) json_decode(file_get_contents('data.json'));
+        $datas = $this->getDataFromEndpoint($request);
         $data = $this->transformIntoCollection($datas);
         
-
         #   Most recent saved breaking news
         $head = headline::latest()->first();
         //dd($head, headline::all());
@@ -88,6 +88,7 @@ class TopHeadlinesController extends Controller
         $data = $this->transformIntoCollection($this->getDataFromEndpoint($request));
         
         $class = 'info';
+        
 /* 
         $data = headline::all();
         $class = 'success'; */
@@ -112,12 +113,22 @@ class TopHeadlinesController extends Controller
      */
     public function store(Request $request)
     {
-        dd(0);
+        //dd($request->all());
         headline::create($request->all());
         
-        $data = headline::all();
         $class = 'success';
-        return view('components.breaking', compact('data','class'));
+        // return view('components.breaking', compact('data','class'));
+
+        #fetch data
+        $data = $this->transformIntoCollection($this->getDataFromEndpoint($request));
+        
+
+        #   Most recent saved breaking news
+        $head = headline::latest()->first();
+        //dd($head, headline::all());
+        
+           
+        return view('headlines', compact('data','head'));
     }
 
     /**
@@ -126,9 +137,10 @@ class TopHeadlinesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($article)
+    { 
+        $sample = '';
+        return view('components.sample-news', compact('sample'));
     }
 
     /**

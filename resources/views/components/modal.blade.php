@@ -82,14 +82,6 @@
   </div>
 
   <script>
-/*       $("#breaking-news").click(function(){    */     
-        $("#modalForm").submit(
-            (e) => {
-                e.preventDefault()
-                toastr.warning('Please wait while creating new breaking news', 'Action in process')
-                $('#myModal').dismiss()
-            }
-        ); // Submit the form
-   /*  }); */
+  /*  */
 
   </script>
