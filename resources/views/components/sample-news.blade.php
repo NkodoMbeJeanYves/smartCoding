@@ -37,35 +37,36 @@
   </head>
   <body>
         <div class="container">
-    <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-        <div class="col-4 pt-1">
-            <a class="text-muted" href="#">&nbsp;</a>
-        </div>
-        <div class="col-4 text-center">
-            <a class="blog-header-logo text-dark" href="#">Smart Code News</a>
-        </div>
-        <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="text-muted" href="#" aria-label="Search">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
-            </a>
-            <a class="btn btn-sm btn-outline-secondary" href="#">&nbsp;</a>
-        </div>
-        </div>
-    </header>
+            <header class="blog-header py-3">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <a class="text-muted" href="#">&nbsp;</a>
+                </div>
+                <div class="col-4 text-center">
+                    <a class="blog-header-logo text-dark" href="#">Smart Code News</a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <a class="text-muted" href="#" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+                    </a>
+                    <a class="btn btn-sm btn-outline-secondary" href="#">&nbsp;</a>
+                </div>
+                </div>
+            </header>
         </div>
 
 
         <div class="container">
             @if($sample)
-                <div class="card">
+                <div class="card my-2">
                     <h5 class="card-header">{{ $sample->title }}</h5>
                     <div class="card-body">
                         <h5 class="card-title">{{ $sample->name }}</h5>
                         <p class="card-text">{{ $sample->content }}</p>
                         <p class="card-text">{{ $sample->description }}</p>
-                        <p class="card-text">{{ $sample->publishedat->diffForHumans() }}</p>
-                        <a href="#" class="btn btn-primary"></a>
+                        <p class="card-text">{{ $sample->publishedAt }}</p>
+                        <a href="{{ Route('HeadLinesNews')}}" class="btn btn-primary">Read all articles</a>
+                        
                     </div>
                 </div>
             @else
@@ -76,7 +77,7 @@
                         <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non quas corrupti odit illo! Temporibus beatae quos, hic sed inventore eius consequatur, quasi possimus eum natus, tempore nulla atque voluptatibus ut.</p>
                         <p class="card-text">description</p>
                         <p class="card-text">{{ now() }}</p>
-                        <a href="#" class="btn btn-primary"></a>
+                        <a href="{{ Route('HeadLinesNews')}}" class="btn btn-primary">Read all articles</a>
                     </div>
                 </div>
             @endif    

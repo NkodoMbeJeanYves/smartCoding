@@ -17,10 +17,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-/* Route::get('breaking', function(){
-
-    return view('components.breaking');
-}); */
+Route::get('renewCountry/{country}', 'TopHeadlinesController@renewCountry'); 
 
 Route::resource('top-headlines', 'TopHeadlinesController');
 Route::resource('sources', 'SourcesController');

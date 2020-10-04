@@ -34,7 +34,9 @@ class Controller extends BaseController
             if($request->has('country')){
                 $endpoint .= 'country='.$request->has('country').'&';
             }
-    $endpoint .= 'country=fr&';
+            # define custom country control for display specifics informations
+            $displayInformationAboutRelatedToWhichCountry = is_null($request->session()->get('country')) ? 'fr' : $request->session()->get('country');
+            $endpoint .= 'country='.$displayInformationAboutRelatedToWhichCountry.'&';  // this value is setting in the dashboard view while changing country select control
             /*  ==>Category
             #   business 
             #   entertainment 

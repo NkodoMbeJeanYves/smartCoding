@@ -24,8 +24,8 @@ class headline extends Model
         'title',
         'description', 
         'url', 
-        'urltoimage',
-        'publishedat',
+        'urlToImage',
+        'publishedAt',
         'content',
     ];
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection as SupportCollection;
 use stdClass;
+use Carbon\Carbon;
 
 class TopHeadlinesController extends Controller
 {
@@ -22,6 +23,16 @@ class TopHeadlinesController extends Controller
                                 "urlToImage":"https://images.finanzen.net/mediacenter/aaa/firmen/s/sundt-logo001-gr.jpg",
                                 "publishedAt":"2020-09-30T07:57:00Z","content":"Um Ihnen die Übersicht über die große Anzahl an Nachrichten, die jeden Tag für ein Unternehmen erscheinen, etwas zu erleichtern, haben wir den Nachrichtenfeed in folgende Kategorien aufgeteilt:\r\nRele… [+396 chars]"
                                 }';
+
+    /**
+    * @Comment renew Country for showing information
+    */
+    public function renewCountry($country, Request $request){
+        $request->session()->put('country', $country);
+        return response()->json(200);
+    }
+
+
     
     /**
      * @comment transform received data into collection
@@ -34,7 +45,7 @@ class TopHeadlinesController extends Controller
             $headline = new headline;
             $article = (Object) $article;
             $source = (Object) $article->source;
-            $d = new \DateTime($article->publishedAt);
+            $formattedDate = Carbon::parse($article->publishedAt)->diffForHumans(); //new \DateTime($article->publishedAt);
             $headline->fill([
                 'id'                => $source->id, 
                 'name'              => $source->name, 
@@ -42,8 +53,8 @@ class TopHeadlinesController extends Controller
                 'title'             => $article->title,
                 'description'       => $article->description, 
                 'url'               => $article->url, 
-                'urlToImage'        => $article->urlToImage,
-                'publishedAt'       => $d,
+                'urlToImage'        => $article->urlToImage ?? Null,
+                'publishedAt'       => $formattedDate,
                 'content'           => $article->content,
                 'source'            => $article->source
             ]);
@@ -66,13 +77,16 @@ class TopHeadlinesController extends Controller
         #fetch data
         $datas = $this->getDataFromEndpoint($request);
         $data = $this->transformIntoCollection($datas);
-        
+        // dd($data);
+        # storing data into session
+        $request->session()->put('headLinesData', $data);
         #   Most recent saved breaking news
         $head = headline::latest()->first();
         //dd($head, headline::all());
         
-           
-        return view('headlines', compact('data','head'));
+        $curCountry = is_null($request->session()->get('country')) ? 'France' : $request->session()->get('country');   
+        
+        return view('headlines', compact('data','head','curCountry'));
     }
 
 
@@ -137,9 +151,10 @@ class TopHeadlinesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($article)
+    public function show($article,Request $request)
     { 
-        $sample = '';
+        $sample = ($request->session()->get('headLinesData'))[$article];
+
         return view('components.sample-news', compact('sample'));
     }
 

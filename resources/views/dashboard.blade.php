@@ -66,36 +66,6 @@
               Top headlines
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#" data-route_name="sources">
-              <span data-feather="file"></span>
-              Sources
-            </a>
-          </li> -->
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
-            </a>
-          </li> -->
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -111,24 +81,6 @@
               Add Breaking News
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Last quarter
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
-            </a>
-          </li> -->
         </ul>
       </div>
     </nav>
@@ -187,7 +139,9 @@
 
               <div class="row form-group">
                   <label>Country</label>
-                  <select class="form-control" name="country" data-key="country">
+                  <select class="form-control" name="country" data-key="country" onchange="renewCountry(this)">
+                      <option selected disabled>select country</option>
+                      
                       <option value="fr">France</option>
                       <option value="ae">AE</option>
                       <option value="ar">AR</option>
@@ -236,5 +190,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script src="{{ asset('js/dashboard.js')}}"></script>
+        <script>
+          function renewCountry(element){
+            let country = element.value
+            let url = 'http://' + window.location.host
+            
+            fetch( url + '/renewCountry/' + country).then(r=>r.json()).then( res => {
+              if (res == 200){
+                toastr.info("New country parameter has been set", 'Confirmation');
+                console.log('new country has been set : ' + country);
+                window.location.replace(url);
+              }
+            })
+          }
+        </script>
     </body>
 </html>
