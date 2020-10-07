@@ -11,7 +11,8 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/blog/">
 
     <!-- Bootstrap core CSS -->
-<link href="{{ asset('css/bootstrap.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<!-- <link href="{{ asset('css/bootstrap.css')}}" rel="stylesheet"> -->
 
     <style>
       .bd-placeholder-img {
@@ -32,6 +33,8 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <!-- Custom styles for this template -->
+
+    <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
     <link href="{{ asset('js/toastr/toastr.css') }}" rel="stylesheet">
   </head>
@@ -71,12 +74,37 @@
     </nav>
   </div>
 
-  <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-    <div class="col-md-6 px-0">
-      <h1 class="display-4 font-italic">{{ substr($head->title,0,20) }}</h1>
-      <p class="lead my-3">{{ substr($head->description,0,20) }}</p>
-      <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Would you read more ?</a></p>
+ <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+
+      <?php foreach ($heads as $key => $head): ?>
+          <?php
+            $active = $key == 1? 'active':'';
+            $title = $head->title;
+            $description = $head->description;
+            $urltoimage = $head->urltoimage;
+            $index = $head->id;
+          ?>
+
+          @include('components/caroussel-item', compact('active','title','description','urltoimage','index'))
+                
+      <?php endforeach ?>
+      
+
     </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 
   <div class="row mb-2">
@@ -106,12 +134,16 @@
     <a href="#">Back to top</a>
   </p>
 </footer>
-  <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script> 
-  <script src="{{ asset('js/toastr/toastr.js')}}"></script>
-  <script src="{{asset('js/toastr/config.js')}}"></script>
+<!--   <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <script src="{{ asset('js/toastr/toastr.js') }}"></script>
+  <script src="{{ asset('js/toastr/config.js') }}"></script>
 
   <script>
-    let country = {{ $curCountry }}
+    let country = <?=$curCountry?> 
     toastr.success('You are reading now specific information about ' + country, 'Congratulation')
 
     function notice(e){
@@ -133,4 +165,5 @@ $(document).ready(function(){
 
   </script>
 </body>
+
 </html>

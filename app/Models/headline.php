@@ -12,7 +12,7 @@ class headline extends Model
     protected $table = 'headlines';
     protected $dates = ['deleted_at'];
     public $incrementing = "false";
-    protected $keyType = "string";
+    
     protected $appends = ['source'];
 
     protected $primaryKey = "id";

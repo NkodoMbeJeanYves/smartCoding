@@ -81,12 +81,11 @@ class TopHeadlinesController extends Controller
         # storing data into session
         $request->session()->put('headLinesData', $data);
         #   Most recent saved breaking news
-        $head = headline::latest()->first();
-        //dd($head, headline::all());
-        
+        $heads = headline::latest()->take(3)->get();
+     
         $curCountry = is_null($request->session()->get('country')) ? 'France' : $request->session()->get('country');   
         
-        return view('headlines', compact('data','head','curCountry'));
+        return view('headlines', compact('data','heads','curCountry'));
     }
 
 
@@ -138,11 +137,11 @@ class TopHeadlinesController extends Controller
         
 
         #   Most recent saved breaking news
-        $head = headline::latest()->first();
+        $heads = headline::latest()->take(3)->get();
         //dd($head, headline::all());
         $curCountry = is_null($request->session()->get('country')) ? 'France' : $request->session()->get('country');   
         
-        return redirect()->route('HeadLinesNews', compact('data','head', 'curCountry'));   
+        return redirect()->route('HeadLinesNews', compact('data','heads', 'curCountry'));   
     }
 
     /**
@@ -156,6 +155,20 @@ class TopHeadlinesController extends Controller
         $sample = ($request->session()->get('headLinesData'))[$article];
 
         return view('components.sample-news', compact('sample'));
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showHeadline($article,Request $request)
+    { 
+        $headline = headline::find($article); 
+
+        return view('components.sample-headline-news', compact('headline'));
     }
 
     /**

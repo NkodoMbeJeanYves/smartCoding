@@ -10,16 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','TopHeadlinesController@getHeadLinesNews')->name('HeadLinesNews');
 
+Route::group(['middleware'=>'auth'], function(){
+    Route::get('/','TopHeadlinesController@getHeadLinesNews')->name('HeadLinesNews');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+    Route::get('renewCountry/{country}', 'TopHeadlinesController@renewCountry'); 
+    Route::resource('top-headlines', 'TopHeadlinesController');
+    Route::get('/showHeadline/{headline}', 'TopHeadlinesController@showHeadline');
+
 });
 
-Route::get('renewCountry/{country}', 'TopHeadlinesController@renewCountry'); 
 
-Route::resource('top-headlines', 'TopHeadlinesController');
+
+
+
 Route::resource('sources', 'SourcesController');
 
 
@@ -40,3 +47,6 @@ Route::get('daily', function(){
     }
     curl_close($curl);
 }); */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
