@@ -140,9 +140,10 @@ class TopHeadlinesController extends Controller
         #   Most recent saved breaking news
         $head = headline::latest()->first();
         //dd($head, headline::all());
+        $curCountry = is_null($request->session()->get('country')) ? 'France' : $request->session()->get('country');   
         
            
-        return view('headlines', compact('data','head'));
+        return view('headlines', compact('data','head', 'curCountry'));
     }
 
     /**
