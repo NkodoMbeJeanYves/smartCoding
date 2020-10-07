@@ -142,8 +142,7 @@ class TopHeadlinesController extends Controller
         //dd($head, headline::all());
         $curCountry = is_null($request->session()->get('country')) ? 'France' : $request->session()->get('country');   
         
-           
-        return view('headlines', compact('data','head', 'curCountry'));
+        return redirect()->route('HeadLinesNews', compact('data','head', 'curCountry'));   
     }
 
     /**
